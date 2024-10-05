@@ -24,7 +24,7 @@ async function genreDropdown() {
 
     // Selecting the first genre
     // genreSelect.selectedIndex = 0;
-    // await genreSelection({ target: genreSelect });
+    await genreSelection({ target: genreSelect });
   } catch (err) {
     console.error(err);
     // console.error("Promise rejected");
@@ -35,6 +35,8 @@ genreDropdown();
 genreSelect.addEventListener("change", genreSelection);
 
 async function genreSelection(event) {
+  Cards.clear()
+  
   const genreId = event.target.value;
   console.log(genreId);
   try {
@@ -53,7 +55,9 @@ async function genreSelection(event) {
       if (movie.poster_path) {
         const cardItem = Cards.createCardItem(
           posterUrl + movie.poster_path,
-          `${movie.title}`
+          `${movie.title}`,
+          movie.title,
+          movie.overview
         );
         // Append the new card item
         Cards.appendCards(cardItem);
