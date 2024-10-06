@@ -2,24 +2,22 @@
 // -------------- Imports --------------
 // import axios from "axios";
 import * as Cards from "./cards.mjs";
-import {
-  getMovies,
-  getMovieGenresList,
-  getPopularMovies,
-  getMoviesByGenre,
-} from "./api.mjs";
-
+import * as Api from "./api.mjs";
 
 // -------------- Grabbing elements from the DOM --------------
 const genreSelect = document.getElementById("genreSelect");
 const searchForm = document.getElementById("search-form");
+const subHeading = document.querySelector("h2");
 
 async function genreDropdown() {
   try {
-    const genreData = await getMovieGenresList();
+    let defaultOption = document.createElement("option");
+    defaultOption.value = "Default";
+    defaultOption.textContent = "--select a genre here--";
+    genreSelect.appendChild(defaultOption);
 
+    const genreData = await Api.getMovieGenresList();
     // console.log(genreData);
-
     genreData.genres.forEach((genre) => {
       let genreOptions = document.createElement("option");
       genreOptions.value = genre.id;
@@ -27,9 +25,9 @@ async function genreDropdown() {
       genreSelect.appendChild(genreOptions);
     });
 
-    // Selecting the first genre
-    // genreSelect.selectedIndex = 0;
-    // await genreSelection({ target: genreSelect });
+    // Selecting the first option
+    genreSelect.selectedIndex = 0;
+    await loadHomePage();
   } catch (err) {
     console.error(err);
     // console.error("Promise rejected");
@@ -44,12 +42,19 @@ async function genreSelection(event) {
   Cards.clear();
 
   const genreId = event.target.value;
-  // console.log(genreId);
+  const genreName = event.target.selectedOptions[0].textContent;
+  console.log(genreId);
+  console.log(event.target.selectedOptions[0].textContent);
   try {
-    const genreResults = await getMoviesByGenre(genreId);
+    if (genreId == "Default") {
+      await loadHomePage();
+      subHeading.textContent = "Popular Movies!";
+    }else{
+    const genreResults = await Api.getMoviesByGenre(genreId);
     const resultsDetail = genreResults.results;
     // console.log(resultsDetail);
     renderCards(resultsDetail);
+    subHeading.textContent = `${genreName} Films!`;}
   } catch (err) {
     console.error(err);
   }
@@ -65,10 +70,11 @@ async function handleSearch(event) {
   // console.log(query);
   try {
     if (query) {
-      const movies = await getMovies(query);
+      const movies = await Api.getMovies(query);
       const queryResults = movies.results;
       // console.log(queryResults);
       renderCards(queryResults);
+      // subHeading.textContent = "Popular Movies!";
     }
   } catch (err) {
     console.log(err);
@@ -79,14 +85,14 @@ async function handleSearch(event) {
 
 async function loadHomePage() {
   try {
-    const popMovies = await getPopularMovies();
+    const popMovies = await Api.getPopularMovies();
     const popResults = popMovies.results;
     renderCards(popResults);
   } catch (error) {
     console.error(error);
   }
 }
-loadHomePage();
+// loadHomePage();
 
 // Helper functions
 function renderCards(movieDetail) {
