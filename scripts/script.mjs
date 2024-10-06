@@ -2,7 +2,7 @@
 // -------------- Imports --------------
 // import axios from "axios";
 import * as Cards from "./cards.mjs";
-import { bearerToken, getMovies, getMovieGenres } from "./api.mjs";
+import { bearerToken, getMovies, getMovieGenres, getPopularMovies } from "./api.mjs";
 // import { createCardItem, appendCards } from "./cards.mjs";
 
 // -------------- Grabbing elements from the DOM --------------
@@ -32,6 +32,7 @@ async function genreDropdown() {
 }
 genreDropdown();
 
+// Genre Select
 genreSelect.addEventListener("change", genreSelection);
 
 async function genreSelection(event) {
@@ -55,6 +56,7 @@ async function genreSelection(event) {
   }
 }
 
+// Movie Search
 searchForm.addEventListener("submit", handleSearch);
 
 async function handleSearch(event) {
@@ -73,6 +75,19 @@ async function handleSearch(event) {
     console.log(err);
   }
 }
+
+// Default Home Page load
+
+async function loadHomePage(){
+  try {
+    const popMovies = await getPopularMovies();
+    const popResults = popMovies.results;
+    renderCards(popResults);
+  } catch (error) {
+    console.error(error)
+  }
+}
+loadHomePage()
 
 // Helper functions
 function renderCards(movieDetail) {

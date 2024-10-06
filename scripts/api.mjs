@@ -1,7 +1,7 @@
 // api.mjs
 // -------------- Imports --------------
 // import axios from "axios";
-import {} from "./script.mjs"
+import {} from "./script.mjs";
 // -------------- API information --------------
 const apiKey = "a033e140831df183efc1df7cc9e60d21";
 export const bearerToken =
@@ -45,5 +45,23 @@ export async function getMovieGenres() {
 }
 // getMovieGenres();
 
+export async function getPopularMovies() {
+  try {
+    const response = await axios.get(
+      "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      }
+    );
+    // console.log(response.data.results);
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    console.error("Promise rejected");
+  }
+}
 
-
+// getPopularMovies();
