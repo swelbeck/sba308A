@@ -5,4 +5,38 @@ html {
 
 body {
   margin: 40px;
+  background-color:rgb(37, 49, 69);
+  
+}
+
+h1{
+  color:ghostwhite;
+  font-family: Papyrus, Garamond, fantasy;
+  
+}
+
+h2{
+  color:ghostwhite;
+  font-family: Papyrus;
+  text-align: center;
+  margin: 10px;
+  margin-top: 20px;
+}
+
+.search-bar {
+  margin-top: 20px;
+}
+
+#movie-search {
+  width: 300px; 
+}
+
+.form-select {
+  width: auto;
+  margin-left: 10px;
+}
+
+.bi-film {
+  font-size: 2rem;
+  color:ghostwhite;
 }
