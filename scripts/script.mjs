@@ -2,8 +2,13 @@
 // -------------- Imports --------------
 // import axios from "axios";
 import * as Cards from "./cards.mjs";
-import { bearerToken, getMovies, getMovieGenres, getPopularMovies } from "./api.mjs";
-// import { createCardItem, appendCards } from "./cards.mjs";
+import {
+  getMovies,
+  getMovieGenresList,
+  getPopularMovies,
+  getMoviesByGenre,
+} from "./api.mjs";
+
 
 // -------------- Grabbing elements from the DOM --------------
 const genreSelect = document.getElementById("genreSelect");
@@ -11,7 +16,7 @@ const searchForm = document.getElementById("search-form");
 
 async function genreDropdown() {
   try {
-    const genreData = await getMovieGenres();
+    const genreData = await getMovieGenresList();
 
     // console.log(genreData);
 
@@ -41,14 +46,8 @@ async function genreSelection(event) {
   const genreId = event.target.value;
   // console.log(genreId);
   try {
-    const genreQuery = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&with_genres=${genreId}`;
-    const genreResults = await axios.get(genreQuery, {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    });
-    const resultsDetail = genreResults.data.results;
+    const genreResults = await getMoviesByGenre(genreId);
+    const resultsDetail = genreResults.results;
     // console.log(resultsDetail);
     renderCards(resultsDetail);
   } catch (err) {
@@ -68,7 +67,7 @@ async function handleSearch(event) {
     if (query) {
       const movies = await getMovies(query);
       const queryResults = movies.results;
-      console.log(queryResults);
+      // console.log(queryResults);
       renderCards(queryResults);
     }
   } catch (err) {
@@ -78,16 +77,16 @@ async function handleSearch(event) {
 
 // Default Home Page load
 
-async function loadHomePage(){
+async function loadHomePage() {
   try {
     const popMovies = await getPopularMovies();
     const popResults = popMovies.results;
     renderCards(popResults);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
-loadHomePage()
+loadHomePage();
 
 // Helper functions
 function renderCards(movieDetail) {
