@@ -54,9 +54,11 @@
               Search
             </button>
           </form>
-          <select id="genreSelect" class="form-select mb-3" aria-label="Large select example">
-        
-          </select>
+          <select
+            id="genreSelect"
+            class="form-select mb-3"
+            aria-label="Large select example"
+          ></select>
         </div>
       </div>
     </header>
@@ -64,9 +66,8 @@
     <main>
       <section id="movie-results">
         <h2>Popular Movies!</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-          <div class="col" id="cardInner"></div>
-        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="cardInner"></div>
 
         <div class="pagination">
           <nav aria-label="Page navigation example">
@@ -121,7 +122,7 @@
     <!-- Carousel Item Template -->
     <template id="cardItemTemplate">
       <div class="card-item">
-        <div class="card .h-100 text-center" style="width: 25rem">
+        <div class="card h-100 text-center" style="width: 25rem">
           <img src="" class="card-img-top" alt="..." />
           <div class="card-body">
             <h3 class="card-title">Movie Title</h3>
@@ -129,15 +130,16 @@
               Description: Some quick example text to build on the card title
               and make up the bulk of the card's content.
             </p>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Rating: ★★★★☆</li>
-              <li class="list-group-item">A second item</li>
-              <li class="list-group-item">A third item</li>
-            </ul>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Year Released:</li>
+            <li class="list-group-item">Director:</li>
+            <li class="list-group-item">Rating: ★★★★☆</li>
+          </ul>
+
+          <div class="card-footer text-body-secondary">
             <a href="#" class="btn btn-primary">View More</a>
           </div>
-
-          <div class="card-footer text-body-secondary">2 days ago</div>
         </div>
       </div>
     </template>

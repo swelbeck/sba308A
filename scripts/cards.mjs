@@ -21,6 +21,10 @@ export function createCardItem(imgSrc, imgAlt, movieTitle, movieOverview) {
 }
 
 export function appendCards(element) {
+  const cardWrapper = document.createElement("div");
+  cardWrapper.classList.add("col");
+  cardWrapper.appendChild(element);
+
   const carousel = document.querySelector("#cardInner");
   carousel.appendChild(element);
 }
