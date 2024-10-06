@@ -18,7 +18,7 @@ export function createCardItem(imgSrc, imgAlt, movieTitle, movieOverview) {
   description.textContent = movieOverview;
 
   return clone;
-};
+}
 
 export function appendCards(element) {
   const carousel = document.querySelector("#cardInner");

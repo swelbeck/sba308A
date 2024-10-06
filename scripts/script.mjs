@@ -74,7 +74,7 @@ async function handleSearch(event) {
       const queryResults = movies.results;
       // console.log(queryResults);
       renderCards(queryResults);
-      // subHeading.textContent = "Popular Movies!";
+      subHeading.textContent = `Movie results for: ${query.toUpperCase()}!`;
     }
   } catch (err) {
     console.log(err);
