@@ -71,7 +71,6 @@ export async function getPopularMovies() {
 
 // API call for dropdown function - get movie list by genre
 export async function getMoviesByGenre(genreId) {
-  // console.log(`Fetching movies for genreId: ${genreId}`);
   try {
     const genreQuery = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&with_genres=${genreId}`;
     const results = await axios.get(genreQuery, {
@@ -118,11 +117,3 @@ export async function getDirector(movieId) {
   }
 }
 
-// await getDirector(519182);
-// async function main() {
-//   const movieId = 519182;
-//   const directors = await getDirector(movieId);
-//   console.log(directors);
-// }
-
-// main();
