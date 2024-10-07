@@ -29,6 +29,7 @@ Make sure to use your actual TMDb API key in the api.mjs file.
 ## Future Updates
 - Update styling
 - Add POST requests
+- Add pagination functionality
 
 ## Acknowledgements
 [TMDb API](https://www.themoviedb.org)
