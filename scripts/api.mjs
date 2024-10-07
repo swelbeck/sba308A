@@ -6,7 +6,7 @@
 const bearerToken =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMDMzZTE0MDgzMWRmMTgzZWZjMWRmN2NjOWU2MGQyMSIsIm5iZiI6MTcyODE1OTUxNS40NjgxNDgsInN1YiI6IjVmYTVjZDFlMjE2MjFkMDA0MGY1MGQ4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4bAtlpl92S4efx4_J_uxLP9lbhke4o9atyyUPJwbN-Q";
 
-  const moviesUrl = `https://api.themoviedb.org/3/search/movie?query=`;
+const moviesUrl = `https://api.themoviedb.org/3/search/movie?query=`;
 
 // API call for search function - search by movie name
 export async function getMovies(query) {
@@ -59,7 +59,7 @@ export async function getPopularMovies() {
         },
       }
     );
-    console.log(response.data.results);
+    // console.log(response.data.results);
     return response.data;
   } catch (err) {
     console.error(err);
@@ -89,3 +89,40 @@ export async function getMoviesByGenre(genreId) {
 }
 
 // getMoviesByGenre();
+
+export async function getDirector(movieId) {
+  try {
+    const directorQuery = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`;
+    const directorResults = await axios.get(directorQuery, {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    });
+    // console.log(directorResults.data.crew);
+
+    const crewInfo = directorResults.data.crew;
+    let directors = ``;
+
+    for (const crew of crewInfo) {
+      if (crew.job === "Director") {
+        // directors.push(crew.name);
+        directors += crew.name
+      }
+    }
+
+    return directors;
+  } catch (err) {
+    console.error(err);
+    console.error("Promise rejected");
+  }
+}
+
+// await getDirector(519182);
+// async function main() {
+//   const movieId = 519182;
+//   const directors = await getDirector(movieId);
+//   console.log(directors);
+// }
+
+// main();

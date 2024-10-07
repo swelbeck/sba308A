@@ -49,12 +49,13 @@ async function genreSelection(event) {
     if (genreId == "Default") {
       await loadHomePage();
       subHeading.textContent = "Popular Movies!";
-    }else{
-    const genreResults = await Api.getMoviesByGenre(genreId);
-    const resultsDetail = genreResults.results;
-    // console.log(resultsDetail);
-    renderCards(resultsDetail);
-    subHeading.textContent = `${genreName} Films!`;}
+    } else {
+      const genreResults = await Api.getMoviesByGenre(genreId);
+      const resultsDetail = genreResults.results;
+      // console.log(resultsDetail);
+      renderCards(resultsDetail);
+      subHeading.textContent = `${genreName} Films!`;
+    }
   } catch (err) {
     console.error(err);
   }
@@ -72,7 +73,7 @@ async function handleSearch(event) {
     if (query) {
       const movies = await Api.getMovies(query);
       const queryResults = movies.results;
-      // console.log(queryResults);
+      console.log(queryResults);
       renderCards(queryResults);
       subHeading.textContent = `Movie results for: ${query.toUpperCase()}!`;
     }
@@ -95,24 +96,45 @@ async function loadHomePage() {
 // loadHomePage();
 
 // Helper functions
-function renderCards(movieDetail) {
+async function renderCards(movieDetail) {
   const posterUrl = `https://image.tmdb.org/t/p/original/`;
   try {
-    movieDetail.forEach((movie) => {
+    for (const movie of movieDetail) {
+      const movieId = movie.id;
+      const directors = await Api.getDirector(movieId);
+
+      // Error handling for dates
+      const relDate = new Date(movie.release_date);
+      let formattedReleaseDate; 
+
+      if (isNaN(relDate.getTime())) {
+        console.warn(
+          `Invalid release date for movie ID ${movie.id}: ${movie.release_date}`
+        );
+        formattedReleaseDate = "Release Date Unavailable"; 
+      } else {
+        
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        formattedReleaseDate = new Intl.DateTimeFormat("en-US", options).format(relDate);
+      }
+
       if (movie.poster_path) {
         const cardItem = Cards.createCardItem(
           posterUrl + movie.poster_path,
           `${movie.title}`,
           movie.title,
-          movie.overview
+          movie.overview,
+          `Release date: ${formattedReleaseDate}`, 
+          `Director: ${directors}`
         );
-        // Append the new card item
+
         Cards.appendCards(cardItem);
       } else {
         console.warn(`No image found for: ${movie.title}, id: ${movie.id}`);
       }
-    });
+    }
   } catch (error) {
     console.log(error);
   }
 }
+

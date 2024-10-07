@@ -1,6 +1,13 @@
 // cards.mjs
 
-export function createCardItem(imgSrc, imgAlt, movieTitle, movieOverview) {
+export function createCardItem(
+  imgSrc,
+  imgAlt,
+  movieTitle,
+  movieOverview,
+  yearReleased,
+  director
+) {
   const template = document.querySelector("#cardItemTemplate");
   const clone = template.content.firstElementChild.cloneNode(true);
 
@@ -16,6 +23,14 @@ export function createCardItem(imgSrc, imgAlt, movieTitle, movieOverview) {
   // Movie Descriptions
   const description = clone.querySelector("p");
   description.textContent = movieOverview;
+
+  // Year Released
+  const releaseYear = clone.querySelector("#year-released-li");
+  releaseYear.textContent = yearReleased;
+
+  // Director Name
+  const directorName = clone.querySelector("#director-li");
+  directorName.textContent = director;
 
   return clone;
 }
