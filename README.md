@@ -1,7 +1,7 @@
 # SBA 308A: JavaScript Web Application
 
 ## Project Description
-Scene It! is a single-page web application, which utilized the TMDb (The Movie Database) API, that allows users to search for movies, view their details, and rate them.
+Scene It! is a single-page web application, which utilized the TMDb (The Movie Database) API, that allows users to search for movies and view their details.
 
 ## Features
 - Search for movies by title or genre.
@@ -28,7 +28,7 @@ Make sure to use your actual TMDb API key in the api.mjs file.
 
 ## Future Updates
 - Update styling
-- Add POST requests
+- Add POST requests (Ability to rate movies)
 - Add pagination functionality
 
 ## Acknowledgements
